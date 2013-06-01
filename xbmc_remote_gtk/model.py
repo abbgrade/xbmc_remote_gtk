@@ -87,3 +87,30 @@ class Song(Item):
 
     def __str__(self):
         return self.label
+
+class Genre(object):
+
+    def __init__(self, genreid, label):
+        self.genreid = genreid
+        self.label = label
+
+    def __str__(self):
+        return self.label
+
+class Artist(object):
+
+    def __init__(self, artistid, artist, label):
+        self.artistid = artistid
+        self.name = artist
+
+    def __str__(self):
+        return self.name
+
+class Album(object):
+
+    def __init__(self, albumid, label):
+        self.albumid = albumid
+        self.title = label
+
+    def __str__(self):
+        return self.title

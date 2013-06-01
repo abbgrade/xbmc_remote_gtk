@@ -11,6 +11,7 @@ import logging
 import threading
 
 from model import Song as SongModel, AudioPlayer as AudioPlayerModel
+from model import Genre as GenreModel, Artist as ArtistModel, Album as AlbumModel
 from view import PlayerWindow
 
 class Config(dict):
@@ -139,8 +140,9 @@ class GetPlayerStatusCron(_Cron):
 
 class RemoteException(Exception):
 
-    def __init__(self, message, code):
+    def __init__(self, message, code, data = None):
         self.code = code
+        self.data = data
         Exception.__init__(self, message)
 
 
@@ -201,6 +203,24 @@ class AudioLibrary(_Library):
         struct = self.client._request('AudioLibrary.GetSongDetails', songid = id, properties = SongModel.PROPERTIES)
         item = SongModel(*struct)
         return item
+
+    def get_genres(self):
+        genres = []
+        for struct in self.client._request('AudioLibrary.GetGenres')['genres']:
+            genres.append(GenreModel(**struct))
+        return genres
+
+    def get_artists(self):
+        artists = []
+        for struct in self.client._request('AudioLibrary.GetArtists')['artists']:
+            artists.append(ArtistModel(**struct))
+        return artists
+
+    def get_albums(self):
+        albums = []
+        for struct in self.client._request('AudioLibrary.GetAlbums')['albums']:
+            albums.append(AlbumModel(**struct))
+        return albums
 
 class _Player(object):
 

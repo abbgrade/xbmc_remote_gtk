@@ -26,7 +26,8 @@ class PlayerWindow(object):
                'song_subtitle_label',
                'play_toolbutton',
                'pause_toolbutton',
-               'song_progress_box']
+               'song_progress_box',
+               'volume_button']
 
     def __init__(self, core, player):
         logging.debug('init player window')
@@ -52,6 +53,15 @@ class PlayerWindow(object):
 
         self.model.register_current_song_observer(self)
         self.model.register_is_playing_observer(self)
+
+        for genre in self.core.client.audio_library.get_genres():
+            self.genre_liststore.append([genre.label])
+
+        for artist in self.core.client.audio_library.get_artists():
+            self.artist_liststore.append([artist.name])
+
+        for album in self.core.client.audio_library.get_albums():
+            self.album_liststore.append([album.title])
 
     def run(self):
         gtk.main()

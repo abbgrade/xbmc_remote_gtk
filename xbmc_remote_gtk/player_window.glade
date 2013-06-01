@@ -1,12 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <object class="GtkListStore" id="album_liststore"/>
-  <object class="GtkListStore" id="artist_liststore"/>
-  <object class="GtkListStore" id="genre_liststore"/>
+  <object class="GtkListStore" id="album_liststore">
+    <columns>
+      <!-- column-name label -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Alle Alben</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="artist_liststore">
+    <columns>
+      <!-- column-name label -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Alle Künstler</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="genre_liststore">
+    <columns>
+      <!-- column-name label -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Alle Genre</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkListStore" id="liststore1"/>
   <object class="GtkListStore" id="playlist_liststore"/>
-  <object class="GtkListStore" id="track_liststore"/>
   <object class="GtkWindow" id="player_window">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">XBMC Remote</property>
@@ -269,16 +298,18 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="volume_button">
+                      <object class="GtkVolumeButton" id="volume_button">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="receives_default">True</property>
                         <property name="has_tooltip">True</property>
-                        <property name="tooltip_markup" translatable="yes">Lautstärke</property>
-                        <property name="tooltip_text" translatable="yes">Lautstärke</property>
-                        <property name="image">volume_image</property>
-                        <property name="image_position">right</property>
-                        <property name="always_show_image">True</property>
+                        <property name="relief">none</property>
+                        <property name="focus_on_click">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="icons">audio-volume-muted
+audio-volume-high
+audio-volume-low
+audio-volume-medium</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -349,18 +380,45 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
+                <property name="position">200</property>
                 <child>
                   <object class="GtkBox" id="filter_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="border_width">2</property>
+                    <property name="spacing">5</property>
                     <property name="homogeneous">True</property>
                     <child>
-                      <object class="GtkTreeView" id="genre_treeview">
+                      <object class="GtkScrolledWindow" id="genre_scrolledwindow">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="model">genre_liststore</property>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="treeview-selection3"/>
+                        <property name="shadow_type">in</property>
+                        <child>
+                          <object class="GtkTreeView" id="genre_treeview">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="model">genre_liststore</property>
+                            <property name="headers_clickable">False</property>
+                            <property name="search_column">0</property>
+                            <property name="fixed_height_mode">True</property>
+                            <child internal-child="selection">
+                              <object class="GtkTreeSelection" id="treeview-selection">
+                                <property name="mode">multiple</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkTreeViewColumn" id="genre_treeviewcolumn">
+                                <property name="sizing">fixed</property>
+                                <property name="title" translatable="yes">Genre</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="genre_cellrenderertext"/>
+                                  <attributes>
+                                    <attribute name="text">0</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
                         </child>
                       </object>
                       <packing>
@@ -370,12 +428,36 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkTreeView" id="artist_treeview">
+                      <object class="GtkScrolledWindow" id="artist_scrolledwindow">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="model">artist_liststore</property>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="treeview-selection4"/>
+                        <property name="shadow_type">in</property>
+                        <child>
+                          <object class="GtkTreeView" id="artist_treeview">
+                            <property name="can_focus">True</property>
+                            <property name="model">artist_liststore</property>
+                            <property name="search_column">0</property>
+                            <property name="fixed_height_mode">True</property>
+                            <child internal-child="selection">
+                              <object class="GtkTreeSelection" id="treeview-selection7">
+                                <property name="mode">multiple</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkTreeViewColumn" id="artist_treeviewcolumn">
+                                <property name="sizing">fixed</property>
+                                <property name="title" translatable="yes">Künstler</property>
+                                <property name="clickable">True</property>
+                                <property name="sort_column_id">0</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="artist_cellrenderertext"/>
+                                  <attributes>
+                                    <attribute name="text">0</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
                         </child>
                       </object>
                       <packing>
@@ -385,12 +467,36 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkTreeView" id="album_treeview">
+                      <object class="GtkScrolledWindow" id="album_scrolledwindow">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="model">album_liststore</property>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="treeview-selection5"/>
+                        <property name="shadow_type">in</property>
+                        <child>
+                          <object class="GtkTreeView" id="album_treeview">
+                            <property name="can_focus">True</property>
+                            <property name="model">album_liststore</property>
+                            <property name="search_column">0</property>
+                            <property name="fixed_height_mode">True</property>
+                            <child internal-child="selection">
+                              <object class="GtkTreeSelection" id="treeview-selection8">
+                                <property name="mode">multiple</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkTreeViewColumn" id="album_treeviewcolumn">
+                                <property name="sizing">fixed</property>
+                                <property name="title" translatable="yes">Album</property>
+                                <property name="clickable">True</property>
+                                <property name="sort_column_id">1</property>
+                                <child>
+                                  <object class="GtkCellRendererText" id="album_cellrenderertext"/>
+                                  <attributes>
+                                    <attribute name="text">0</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
                         </child>
                       </object>
                       <packing>
@@ -401,12 +507,13 @@
                     </child>
                   </object>
                   <packing>
-                    <property name="resize">False</property>
+                    <property name="resize">True</property>
                     <property name="shrink">True</property>
                   </packing>
                 </child>
                 <child>
                   <object class="GtkTreeView" id="track_treeview">
+                    <property name="height_request">100</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="model">track_liststore</property>
@@ -448,10 +555,5 @@
       </object>
     </child>
   </object>
-  <object class="GtkImage" id="volume_image">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="xpad">8</property>
-    <property name="icon_name">audio-volume-high</property>
-  </object>
+  <object class="GtkListStore" id="track_liststore"/>
 </interface>
