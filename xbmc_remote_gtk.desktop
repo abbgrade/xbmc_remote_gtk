@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=XBMC Remote
+X-GNOME-FullName=XBMC Remote
+Comment=XBMC-Remote
+Categories=GNOME;Utility;
+Exec=main.py
+Icon=xbmc_remote_gtk
+Terminal=false
+Type=Application
+Version=0.0
