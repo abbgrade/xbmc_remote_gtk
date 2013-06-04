@@ -11,6 +11,7 @@ gobject.threads_init()
 from os.path import abspath, dirname, join
 
 import logging
+logging = logging.getLogger(__name__)
 
 from model import AudioPlayer as AudioPlayerModel
 
@@ -29,13 +30,10 @@ class PlayerWindow(object):
                'song_progress_box',
                'volume_button']
 
-    def __init__(self, core, player):
+    def __init__(self, core):
         logging.debug('init player window')
-
-        assert isinstance(player, AudioPlayerModel)
-
         self.core = core
-        self.model = player
+        self.model = AudioPlayerModel()
 
         # init gui builder
         self.builder = gtk.Builder()
@@ -48,18 +46,21 @@ class PlayerWindow(object):
             widget = self.builder.get_object(widget_name)
             object.__setattr__(self, widget_name, widget)
 
-        self.player_window.show_all()
-        self.song_progress_box.hide()
-
         self.model.register_current_song_observer(self)
         self.model.register_is_playing_observer(self)
 
+        self.player_window.show_all()
+        self.song_progress_box.hide()
+
+    def on_genres_update(self, genres):
         for genre in self.core.client.audio_library.get_genres():
             self.genre_liststore.append([genre.label])
 
+    def on_artists_update(self, artists):
         for artist in self.core.client.audio_library.get_artists():
             self.artist_liststore.append([artist.name])
 
+    def on_albums_update(self, albums):
         for album in self.core.client.audio_library.get_albums():
             self.album_liststore.append([album.title])
 
@@ -80,10 +81,10 @@ class PlayerWindow(object):
         self.model.controller.toggle_play_pause()
 
     def on_go_previous_toolbutton_clicked(self, *args):
-        self.player.go_previous()
+        self.model.controller.go_previous()
 
     def on_next_toolbutton_clicked(self, *args):
-        self.player.go_next()
+        self.model.controller.go_next()
 
     def on_current_song_update(self, current_song):
         if current_song:

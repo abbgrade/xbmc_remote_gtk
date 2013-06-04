@@ -4,6 +4,9 @@ Created on 30.05.2013
 @author: abb
 '''
 
+import logging
+logging = logging.getLogger(__name__)
+
 class Player(object):
 
     pass
@@ -11,11 +14,21 @@ class Player(object):
 class AudioPlayer(Player):
 
     def __init__(self, controller = None):
-        self.controller = controller
+        self._controller = controller
         self._current_song = None
         self._speed = None
         self._current_song_observer = []
         self._is_playing_observer = []
+
+    @property
+    def controller(self):
+        return self._controller
+
+    @controller.setter
+    def controller(self, value):
+        self._controller = value
+        self._controller.model = self
+        logging.debug('set controller')
 
     @property
     def speed(self):
@@ -36,7 +49,6 @@ class AudioPlayer(Player):
 
     def register_is_playing_observer(self, observer):
         self._is_playing_observer.append(observer)
-        observer.on_is_playing_update(self.is_playing)
 
     def notify_is_playing_observer(self):
         for observer in self._is_playing_observer:
@@ -44,7 +56,6 @@ class AudioPlayer(Player):
 
     def register_current_song_observer(self, observer):
         self._current_song_observer.append(observer)
-        observer.on_current_song_update(self.current_song)
 
     def _notify_current_song_observer(self):
         for observer in self._current_song_observer:

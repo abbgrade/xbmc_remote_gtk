@@ -8,6 +8,7 @@ import os
 import urllib2
 import json
 import logging
+logging = logging.getLogger(__name__)
 import threading
 
 from model import Song as SongModel, AudioPlayer as AudioPlayerModel
@@ -84,17 +85,14 @@ class Core:
     def __init__(self, config):
         logging.debug('start core')
         self.config = config
-
         self.client = Client(config['server'])
+
+        self.client.register_active_player_observer(self)
         config['server'].register_update_observer(self.client)
 
-        players = self.client.get_active_players()
-        if len(players) > 0:
-            player = players[0]
-        else:
-            player = AudioPlayerModel()
-        self.player_window = PlayerWindow(self, player)
+        self.player_window = PlayerWindow(self)
 
+        threading.Thread(target = self.client.get_active_players).start()
         self.player_status_cron = GetPlayerStatusCron(self, 5)
         self.player_status_cron.start()
 
@@ -103,6 +101,14 @@ class Core:
     def quit(self):
         self.player_status_cron.stop()
         self.player_window.quit()
+
+    def on_active_player_update(self, players):
+        if len(players) > 0:
+            logging.info('player available')
+            player = players[0]
+            self.player_window.model.controller = player
+        else:
+            logging.info('no player available')
 
 
 class _Cron:
@@ -133,7 +139,10 @@ class GetPlayerStatusCron(_Cron):
 
     def _do_job(self):
         logging.debug('do cron job')
-        self.core.player_window.model.controller.get_current_song()
+        try:
+            self.core.player_window.model.controller.get_current_song()
+        except Exception as ex:
+            logging.warn(ex)
         self._timer_lock.release()
         self.start()
 
@@ -148,22 +157,35 @@ class RemoteException(Exception):
 
 class Client:
 
+    DEFAULT_HEADERS = {'Accept':'application/json',
+                       'Content-Type':'application/json'}
+
     def __init__(self, config):
+        logging.debug('create client')
         self.config = config
+        self._active_player_observer = []
 
         self.authenticate()
 
         self.audio_library = AudioLibrary(self)
 
+    def register_active_player_observer(self, observer):
+        self._active_player_observer.append(observer)
+
+    def notify_active_player_observer(self, players):
+        for observer in self._active_player_observer:
+            observer.on_active_player_update(players)
+
     def authenticate(self):
+        logging.debug('authenticate client')
         url = 'http://%s:%d/jsonrpc' % (self.config['host'], self.config['port'])
 
         passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
         passman.add_password(None, url, self.config['username'], self.config['password'])
         urllib2.install_opener(urllib2.build_opener(urllib2.HTTPBasicAuthHandler(passman)))
 
-    def _request(self, method, headers = {}, **params):
-        for key, value in {'Accept':'application/json'}.items():
+    def _request(self, method, headers = {}, timeout = 3, **params):
+        for key, value in Client.DEFAULT_HEADERS.items():
             if key not in headers:
                 headers[key] = value
 
@@ -178,16 +200,19 @@ class Client:
 
         data = json.dumps(data)
         request = urllib2.Request(url, data, headers)
-        response = urllib2.urlopen(request)
+        response = urllib2.urlopen(request, timeout = timeout)
         result_struct = json.load(response)
         if 'error' in result_struct:
             raise RemoteException(**result_struct['error'])
         return result_struct['result']
 
     def get_active_players(self):
-        return [_Player.from_struct(self, struct).model
+        logging.debug('get active players')
+        players = [_Player.from_struct(self, struct)
                     for struct in self._request('Player.GetActivePlayers')
                 ]
+        self.notify_active_player_observer(players)
+        return players
 
 class _Library(object):
 
@@ -197,26 +222,31 @@ class _Library(object):
 class AudioLibrary(_Library):
 
     def __init__(self, client):
+        logging.debug('create audio library')
         self.client = client
 
     def get_song(self, id = None, **params):
+        logging.debug('get song %s' % id)
         struct = self.client._request('AudioLibrary.GetSongDetails', songid = id, properties = SongModel.PROPERTIES)
         item = SongModel(*struct)
         return item
 
     def get_genres(self):
+        logging.debug('get genres')
         genres = []
         for struct in self.client._request('AudioLibrary.GetGenres')['genres']:
             genres.append(GenreModel(**struct))
         return genres
 
     def get_artists(self):
+        logging.debug('get artists')
         artists = []
         for struct in self.client._request('AudioLibrary.GetArtists')['artists']:
             artists.append(ArtistModel(**struct))
         return artists
 
     def get_albums(self):
+        logging.debug('get albums')
         albums = []
         for struct in self.client._request('AudioLibrary.GetAlbums')['albums']:
             albums.append(AlbumModel(**struct))
@@ -238,6 +268,7 @@ class AudioPlayer(_Player):
     PROPERTIES = {'speed': int}
 
     def __init__(self, client, playerid = None):
+        logging.debug('create audio player')
         self.client = client
         self.playerid = playerid
         self.model = AudioPlayerModel(self)
@@ -250,21 +281,25 @@ class AudioPlayer(_Player):
             return _Player.__getattribute__(self, name)
 
     def toggle_play_pause(self):
+        logging.debug('toggle play/pause')
         self.model.speed = self.client._request('Player.PlayPause', playerid = self.playerid)['speed']
 
     def go_next(self):
+        logging.debug('play next song')
         if self.client._request('Player.GoNext', playerid = self.playerid) == 'OK':
             return True
         else:
             return False
 
     def go_previous(self):
+        logging.debug('play previous song')
         if self.client._request('Player.GoPrevious', playerid = self.playerid) == 'OK':
             return True
         else:
             return False
 
     def get_current_song(self):
+        logging.debug('get current song')
         struct = self.client._request('Player.GetItem', playerid = self.playerid, properties = SongModel.PROPERTIES)
         _type = struct['item'].pop('type')
         if _type == 'song':
