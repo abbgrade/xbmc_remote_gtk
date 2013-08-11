@@ -14,8 +14,12 @@ import logging
 logging = logging.getLogger(__name__)
 
 from model import AudioPlayer as AudioPlayerModel
+from model import Remote as RemoteModel
 
-class PlayerWindow(object):
+class PlayerWindow(object,
+                   RemoteModel.ConnectionStateObserver,
+                   AudioPlayerModel.CurrentSongObserver,
+                   AudioPlayerModel.IsPlayingObserver):
 
     WIDGETS = ['player_window',
                'playlist_liststore',
@@ -28,7 +32,8 @@ class PlayerWindow(object):
                'play_toolbutton',
                'pause_toolbutton',
                'song_progress_box',
-               'volume_button']
+               'volume_button',
+               'player_statusbar']
 
     def __init__(self, core):
         logging.debug('init player window')
@@ -46,11 +51,18 @@ class PlayerWindow(object):
             widget = self.builder.get_object(widget_name)
             object.__setattr__(self, widget_name, widget)
 
+        self.core.client.model.register_connection_state_observer(self)
         self.model.register_current_song_observer(self)
         self.model.register_is_playing_observer(self)
 
         self.player_window.show_all()
         self.song_progress_box.hide()
+        self._update_window_state()
+
+    def _update_window_state(self):
+        context = self.player_statusbar.get_context_id(PlayerWindow.STATUSBAR_CONTEXT_CONNECTION)
+        self.player_statusbar.push(context, RemoteModel.CONNECTION_STATES[self.core.client.model.connection_state])
+        self.player_window.set_sensitive(self.core.client.model.connection_state == RemoteModel.CONNECTION_STATE_AUTHENTICATED)
 
     def on_genres_update(self, genres):
         for genre in self.core.client.audio_library.get_genres():
@@ -63,6 +75,11 @@ class PlayerWindow(object):
     def on_albums_update(self, albums):
         for album in self.core.client.audio_library.get_albums():
             self.album_liststore.append([album.title])
+
+    STATUSBAR_CONTEXT_CONNECTION = 'connection'
+
+    def on_connection_state_update(self, state):
+        self._update_window_state()
 
     def run(self):
         gtk.main()
@@ -101,3 +118,65 @@ class PlayerWindow(object):
         else:
             self.play_toolbutton.show()
             self.pause_toolbutton.hide()
+
+    def on_connection_edit_menuitem_activate(self, *args):
+        config_dialog = ConfigDialog(self.core.config)
+        config_dialog.run()
+
+
+class ConfigDialog(object):
+
+    WIDGETS = ['config_dialog',
+               'hostname_entry',
+               'port_entry',
+               'username_entry',
+               'password_entry']
+
+    def __init__(self, config):
+        logging.debug('init config dialog')
+        self.model = config
+
+        # init gui builder
+        self.builder = gtk.Builder()
+        glade_file = join(abspath(dirname(__file__)), 'config_dialog.glade')
+        self.builder.add_from_file(glade_file)
+        self.builder.connect_signals(self)
+
+        # add widgets
+        for widget_name in ConfigDialog.WIDGETS:
+            widget = self.builder.get_object(widget_name)
+            object.__setattr__(self, widget_name, widget)
+
+        # sent content
+        self.hostname_entry.set_text(self.model['server']['host'])
+        self.port_entry.set_text(str(self.model['server']['port']))
+        self.username_entry.set_text(self.model['server']['username'])
+        self.password_entry.set_text(self.model['server']['password'])
+
+        self.config_dialog.show_all()
+
+    def run(self):
+        logging.debug('run config dialog')
+        return self.config_dialog.run()
+
+    def quit(self):
+        self.config_dialog.destroy()
+
+    def on_config_dialog_close(self, *args):
+        logging.debug('close config dialog')
+        self.quit()
+
+    def on_config_dialog_response(self, dialog, response_id):
+        if response_id == -1 or response_id == -4:
+            logging.debug('abort config dialog')
+        elif response_id == 1:
+            self.model['server']['host'] = self.hostname_entry.get_text()
+            try:
+                self.model['server']['port'] = int(self.port_entry.get_text())
+            except: pass
+            self.model['server']['username'] = self.username_entry.get_text()
+            self.model['server']['password'] = self.password_entry.get_text()
+            self.model.save()
+        else:
+            logging.debug('abort config dialog')
+        self.quit()

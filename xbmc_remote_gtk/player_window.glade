@@ -34,8 +34,8 @@
       </row>
     </data>
   </object>
-  <object class="GtkListStore" id="liststore1"/>
   <object class="GtkListStore" id="playlist_liststore"/>
+  <object class="GtkListStore" id="track_liststore"/>
   <object class="GtkWindow" id="player_window">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">XBMC Remote</property>
@@ -58,6 +58,21 @@
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Verbindung</property>
                 <property name="use_underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu" id="menu1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <child>
+                      <object class="GtkMenuItem" id="connection_edit_menuitem">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">_Bearbeiten</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="on_connection_edit_menuitem_activate" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
             <child>
@@ -345,7 +360,6 @@ audio-volume-medium</property>
                   <object class="GtkTreeView" id="treeview1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="model">liststore1</property>
                     <child internal-child="selection">
                       <object class="GtkTreeSelection" id="treeview-selection1"/>
                     </child>
@@ -555,5 +569,4 @@ audio-volume-medium</property>
       </object>
     </child>
   </object>
-  <object class="GtkListStore" id="track_liststore"/>
 </interface>

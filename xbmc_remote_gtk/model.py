@@ -11,6 +11,48 @@ class Player(object):
 
     pass
 
+
+class Remote(object):
+
+    CONNECTION_STATE_OFFLINE = 0
+    CONNECTION_STATE_ONLINE = 1
+    CONNECTION_STATE_AUTHENTICATED = 2
+    CONNECTION_STATES = {
+        CONNECTION_STATE_OFFLINE: 'offline',
+        CONNECTION_STATE_ONLINE:'online',
+        CONNECTION_STATE_AUTHENTICATED:'authenticated'
+    }
+
+    @property
+    def connection_state(self):
+        return self._connection_state
+
+    @connection_state.setter
+    def connection_state(self, value):
+        assert value in Remote.CONNECTION_STATES.keys()
+        self._connection_state = value
+        logging.debug('Client connection state: %s' % Remote.CONNECTION_STATES[value])
+        self.notify_connection_state_observer(value)
+
+    class ConnectionStateObserver:
+
+        def on_connection_state_update(self, state):
+            logging.error('Remote.ConnectionStateObserver.on_connection_state_update not implemented')
+            raise NotImplementedError()
+
+    def __init__(self):
+        self._connection_state = Remote.CONNECTION_STATE_OFFLINE
+        self._connection_state_observer = []
+
+    def register_connection_state_observer(self, observer):
+        assert isinstance(observer, Remote.ConnectionStateObserver)
+        self._connection_state_observer.append(observer)
+
+    def notify_connection_state_observer(self, state):
+        for observer in self._connection_state_observer:
+            observer.on_connection_state_update(state)
+
+
 class AudioPlayer(Player):
 
     def __init__(self, controller = None):
@@ -47,14 +89,26 @@ class AudioPlayer(Player):
             self.speed = self.controller.speed
         return bool(self.speed)
 
+    class IsPlayingObserver:
+
+        def on_is_playing_update(self, is_playing):
+            raise NotImplementedError()
+
     def register_is_playing_observer(self, observer):
+        assert isinstance(observer, AudioPlayer.IsPlayingObserver)
         self._is_playing_observer.append(observer)
 
     def notify_is_playing_observer(self):
         for observer in self._is_playing_observer:
             observer.on_is_playing_update(self.is_playing)
 
+    class CurrentSongObserver:
+
+        def on_current_song_update(self, current_song):
+            raise NotImplementedError()
+
     def register_current_song_observer(self, observer):
+        assert isinstance(observer, AudioPlayer.CurrentSongObserver)
         self._current_song_observer.append(observer)
 
     def _notify_current_song_observer(self):
@@ -90,6 +144,9 @@ class Song(Item):
             self.__setattr__(key, None)
         for key, value in properties.items():
             if key in Song.PROPERTIES:
+                if isinstance(value, list):
+                    value = ','.join(value)
+                assert isinstance(value, basestring) or isinstance(value, int), 'song property is no string or integer'
                 self.__setattr__(key, value)
 
     @property

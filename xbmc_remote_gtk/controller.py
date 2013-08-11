@@ -8,9 +8,11 @@ import os
 import urllib2
 import json
 import logging
+from urllib2 import URLError
 logging = logging.getLogger(__name__)
 import threading
 
+from model import Remote as RemoteModel
 from model import Song as SongModel, AudioPlayer as AudioPlayerModel
 from model import Genre as GenreModel, Artist as ArtistModel, Album as AlbumModel
 from view import PlayerWindow
@@ -66,7 +68,13 @@ class ServerConfig(dict):
 
         self._update_observer = []
 
+    class UpdateObserver:
+
+        def on_server_config_update(self):
+            raise NotImplementedError()
+
     def register_update_observer(self, observer):
+        assert isinstance(observer, ServerConfig.UpdateObserver)
         self._update_observer.append(observer)
 
     def _notify_update_observer(self):
@@ -78,37 +86,6 @@ class ServerConfig(dict):
             logging.debug('server config changed (%s)' % key)
             dict.__setitem__(self, key, value)
             self._notify_update_observer()
-
-
-class Core:
-
-    def __init__(self, config):
-        logging.debug('start core')
-        self.config = config
-        self.client = Client(config['server'])
-
-        self.client.register_active_player_observer(self)
-        config['server'].register_update_observer(self.client)
-
-        self.player_window = PlayerWindow(self)
-
-        threading.Thread(target = self.client.get_active_players).start()
-        self.player_status_cron = GetPlayerStatusCron(self, 5)
-        self.player_status_cron.start()
-
-        self.player_window.run()
-
-    def quit(self):
-        self.player_status_cron.stop()
-        self.player_window.quit()
-
-    def on_active_player_update(self, players):
-        if len(players) > 0:
-            logging.info('player available')
-            player = players[0]
-            self.player_window.model.controller = player
-        else:
-            logging.info('no player available')
 
 
 class _Cron:
@@ -149,27 +126,51 @@ class GetPlayerStatusCron(_Cron):
 
 class RemoteException(Exception):
 
+    # TODO parse and verify code
+
     def __init__(self, message, code, data = None):
         self.code = code
         self.data = data
         Exception.__init__(self, message)
 
 
-class Client:
+class ConnectionException(Exception):
 
-    DEFAULT_HEADERS = {'Accept':'application/json',
-                       'Content-Type':'application/json'}
+    NOT_REACHABLE = 0
+    CODES = {
+        NOT_REACHABLE: 'not reachable'
+    }
+
+    def __init__(self, code, exception = None):
+        assert code in ConnectionException.CODES.keys()
+        self.code = code
+        self.exception = exception
+
+
+class Client(object, ServerConfig.UpdateObserver):
+
+    DEFAULT_HEADERS = {
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+    }
 
     def __init__(self, config):
         logging.debug('create client')
         self.config = config
+        self.model = RemoteModel()
         self._active_player_observer = []
 
-        self.authenticate()
-
+        # init dynamic stuff
+        self.on_server_config_update(config)
         self.audio_library = AudioLibrary(self)
 
+    class ActivePlayerObserver:
+
+        def on_active_player_update(self, players):
+            raise NotImplementedError()
+
     def register_active_player_observer(self, observer):
+        assert isinstance(observer, Client.ActivePlayerObserver)
         self._active_player_observer.append(observer)
 
     def notify_active_player_observer(self, players):
@@ -179,10 +180,15 @@ class Client:
     def authenticate(self):
         logging.debug('authenticate client')
         url = 'http://%s:%d/jsonrpc' % (self.config['host'], self.config['port'])
-
-        passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
-        passman.add_password(None, url, self.config['username'], self.config['password'])
-        urllib2.install_opener(urllib2.build_opener(urllib2.HTTPBasicAuthHandler(passman)))
+        try:
+            passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
+            passman.add_password(None, url, self.config['username'], self.config['password'])
+            urllib2.install_opener(urllib2.build_opener(urllib2.HTTPBasicAuthHandler(passman)))
+            self.model.connection_state = RemoteModel.CONNECTION_STATE_AUTHENTICATED
+        except Exception as ex:
+            logging.error('unknown error')
+            self.model.connection_state = RemoteModel.CONNECTION_STATE_OFFLINE
+            raise ex
 
     def _request(self, method, headers = {}, timeout = 3, **params):
         for key, value in Client.DEFAULT_HEADERS.items():
@@ -200,19 +206,38 @@ class Client:
 
         data = json.dumps(data)
         request = urllib2.Request(url, data, headers)
-        response = urllib2.urlopen(request, timeout = timeout)
-        result_struct = json.load(response)
-        if 'error' in result_struct:
-            raise RemoteException(**result_struct['error'])
-        return result_struct['result']
+        try:
+            response = urllib2.urlopen(request, timeout = timeout)
+            result_struct = json.load(response)
+            if 'error' in result_struct:
+                raise RemoteException(**result_struct['error'])
+            return result_struct['result']
+        except URLError as ex:
+            if ex.reason.errno == 2:  # file not found
+                logging.warn('XBMC (API) not reachable')
+                self.model.connection_state = RemoteModel.CONNECTION_STATE_OFFLINE
+                raise ConnectionException(ConnectionException.NOT_REACHABLE, exception = ex)
+            else:
+                logging.error('unknown URLError %s' % ex)
+                self.model.connection_state = RemoteModel.CONNECTION_STATE_OFFLINE
+                raise ex
+        except Exception as ex:
+            logging.error('unknown error %s' % ex)
+            self.model.connection_state = RemoteModel.CONNECTION_STATE_OFFLINE
+            raise ex
 
     def get_active_players(self):
         logging.debug('get active players')
-        players = [_Player.from_struct(self, struct)
-                    for struct in self._request('Player.GetActivePlayers')
-                ]
+        players = [
+            _Player.from_struct(self, struct)
+            for struct
+            in self._request('Player.GetActivePlayers')
+        ]
         self.notify_active_player_observer(players)
         return players
+
+    def on_server_config_update(self, server_config):
+        self.authenticate()
 
 class _Library(object):
 
@@ -308,3 +333,34 @@ class AudioPlayer(_Player):
             return item
         else:
             raise Exception('unknown item type')
+
+
+class Core(object, Client.ActivePlayerObserver):
+
+    def __init__(self, config):
+        logging.debug('start core')
+        self.config = config
+        self.client = Client(config['server'])
+
+        self.client.register_active_player_observer(self)
+        config['server'].register_update_observer(self.client)
+
+        self.player_window = PlayerWindow(self)
+
+        threading.Thread(target = self.client.get_active_players).start()  # TODO replace this with something nicer
+        self.player_status_cron = GetPlayerStatusCron(self, 5)
+        self.player_status_cron.start()
+
+        self.player_window.run()
+
+    def quit(self):
+        self.player_status_cron.stop()
+        self.player_window.quit()
+
+    def on_active_player_update(self, players):
+        if len(players) > 0:
+            logging.info('player available')
+            player = players[0]
+            self.player_window.model.controller = player
+        else:
+            logging.info('no player available')
