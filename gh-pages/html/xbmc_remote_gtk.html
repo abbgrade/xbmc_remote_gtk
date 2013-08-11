@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>xbmc_remote_gtk Package &mdash; XBMC Remote GTK  documentation</title>
+    
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="XBMC Remote GTK  documentation" href="index.html" />
+    <link rel="prev" title="Welcome to xbmc_remote_gtk’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to xbmc_remote_gtk’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">XBMC Remote GTK  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="xbmc-remote-gtk-package">
+<h1>xbmc_remote_gtk Package<a class="headerlink" href="#xbmc-remote-gtk-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-xbmc_remote_gtk.controller">
+<span id="controller-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">controller</span></tt> Module<a class="headerlink" href="#module-xbmc_remote_gtk.controller" title="Permalink to this headline">¶</a></h2>
+<p>Created on 30.05.2013</p>
+<p>&#64;author: Steffen Kampmann</p>
+<dl class="class">
+<dt id="xbmc_remote_gtk.controller.AudioLibrary">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.controller.</tt><tt class="descname">AudioLibrary</tt><big>(</big><em>client</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#AudioLibrary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">xbmc_remote_gtk.controller._Library</span></tt></p>
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.AudioLibrary.get_albums">
+<tt class="descname">get_albums</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#AudioLibrary.get_albums"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioLibrary.get_albums" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.AudioLibrary.get_artists">
+<tt class="descname">get_artists</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#AudioLibrary.get_artists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioLibrary.get_artists" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.AudioLibrary.get_genres">
+<tt class="descname">get_genres</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#AudioLibrary.get_genres"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioLibrary.get_genres" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.AudioLibrary.get_song">
+<tt class="descname">get_song</tt><big>(</big><em>id=None</em>, <em>**params</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#AudioLibrary.get_song"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioLibrary.get_song" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.controller.AudioPlayer">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.controller.</tt><tt class="descname">AudioPlayer</tt><big>(</big><em>client</em>, <em>playerid=None</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#AudioPlayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioPlayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">xbmc_remote_gtk.controller._Player</span></tt></p>
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.controller.AudioPlayer.PROPERTIES">
+<tt class="descname">PROPERTIES</tt><em class="property"> = {'speed': &lt;type 'int'&gt;}</em><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioPlayer.PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.AudioPlayer.get_current_song">
+<tt class="descname">get_current_song</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#AudioPlayer.get_current_song"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioPlayer.get_current_song" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.AudioPlayer.go_next">
+<tt class="descname">go_next</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#AudioPlayer.go_next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioPlayer.go_next" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.AudioPlayer.go_previous">
+<tt class="descname">go_previous</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#AudioPlayer.go_previous"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioPlayer.go_previous" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.AudioPlayer.toggle_play_pause">
+<tt class="descname">toggle_play_pause</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#AudioPlayer.toggle_play_pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.AudioPlayer.toggle_play_pause" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.controller.Client">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.controller.</tt><tt class="descname">Client</tt><big>(</big><em>config</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">xbmc_remote_gtk.controller.UpdateObserver</span></tt></p>
+<dl class="class">
+<dt id="xbmc_remote_gtk.controller.Client.ActivePlayerObserver">
+<em class="property">class </em><tt class="descname">ActivePlayerObserver</tt><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Client.ActivePlayerObserver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Client.ActivePlayerObserver" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="xbmc_remote_gtk.controller.Client.ActivePlayerObserver.on_active_player_update">
+<tt class="descname">on_active_player_update</tt><big>(</big><em>players</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Client.ActivePlayerObserver.on_active_player_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Client.ActivePlayerObserver.on_active_player_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.controller.Client.DEFAULT_HEADERS">
+<tt class="descclassname">Client.</tt><tt class="descname">DEFAULT_HEADERS</tt><em class="property"> = {'Content-Type': 'application/json', 'Accept': 'application/json'}</em><a class="headerlink" href="#xbmc_remote_gtk.controller.Client.DEFAULT_HEADERS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.Client.authenticate">
+<tt class="descclassname">Client.</tt><tt class="descname">authenticate</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Client.authenticate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Client.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.Client.get_active_players">
+<tt class="descclassname">Client.</tt><tt class="descname">get_active_players</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Client.get_active_players"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Client.get_active_players" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.Client.notify_active_player_observer">
+<tt class="descclassname">Client.</tt><tt class="descname">notify_active_player_observer</tt><big>(</big><em>players</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Client.notify_active_player_observer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Client.notify_active_player_observer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.Client.on_server_config_update">
+<tt class="descclassname">Client.</tt><tt class="descname">on_server_config_update</tt><big>(</big><em>server_config</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Client.on_server_config_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Client.on_server_config_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.Client.register_active_player_observer">
+<tt class="descclassname">Client.</tt><tt class="descname">register_active_player_observer</tt><big>(</big><em>observer</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Client.register_active_player_observer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Client.register_active_player_observer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.controller.Config">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.controller.</tt><tt class="descname">Config</tt><big>(</big><em>path</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></p>
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.Config.load">
+<tt class="descname">load</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Config.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Config.load" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.Config.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Config.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Config.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="xbmc_remote_gtk.controller.ConnectionException">
+<em class="property">exception </em><tt class="descclassname">xbmc_remote_gtk.controller.</tt><tt class="descname">ConnectionException</tt><big>(</big><em>code</em>, <em>exception=None</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#ConnectionException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.ConnectionException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.controller.ConnectionException.CODES">
+<tt class="descname">CODES</tt><em class="property"> = {0: 'not reachable'}</em><a class="headerlink" href="#xbmc_remote_gtk.controller.ConnectionException.CODES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.controller.ConnectionException.NOT_REACHABLE">
+<tt class="descname">NOT_REACHABLE</tt><em class="property"> = 0</em><a class="headerlink" href="#xbmc_remote_gtk.controller.ConnectionException.NOT_REACHABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.controller.Core">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.controller.</tt><tt class="descname">Core</tt><big>(</big><em>config</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Core"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Core" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">xbmc_remote_gtk.controller.ActivePlayerObserver</span></tt></p>
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.Core.on_active_player_update">
+<tt class="descname">on_active_player_update</tt><big>(</big><em>players</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Core.on_active_player_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Core.on_active_player_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.Core.quit">
+<tt class="descname">quit</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#Core.quit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.Core.quit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.controller.GetPlayerStatusCron">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.controller.</tt><tt class="descname">GetPlayerStatusCron</tt><big>(</big><em>core</em>, <em>interval</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#GetPlayerStatusCron"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.GetPlayerStatusCron" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">xbmc_remote_gtk.controller._Cron</span></tt></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="xbmc_remote_gtk.controller.RemoteException">
+<em class="property">exception </em><tt class="descclassname">xbmc_remote_gtk.controller.</tt><tt class="descname">RemoteException</tt><big>(</big><em>message</em>, <em>code</em>, <em>data=None</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#RemoteException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.RemoteException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.controller.ServerConfig">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.controller.</tt><tt class="descname">ServerConfig</tt><big>(</big><em>**args</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#ServerConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.ServerConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">dict</span></tt></p>
+<dl class="class">
+<dt id="xbmc_remote_gtk.controller.ServerConfig.UpdateObserver">
+<em class="property">class </em><tt class="descname">UpdateObserver</tt><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#ServerConfig.UpdateObserver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.ServerConfig.UpdateObserver" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="xbmc_remote_gtk.controller.ServerConfig.UpdateObserver.on_server_config_update">
+<tt class="descname">on_server_config_update</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#ServerConfig.UpdateObserver.on_server_config_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.ServerConfig.UpdateObserver.on_server_config_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.controller.ServerConfig.register_update_observer">
+<tt class="descclassname">ServerConfig.</tt><tt class="descname">register_update_observer</tt><big>(</big><em>observer</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/controller.html#ServerConfig.register_update_observer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.controller.ServerConfig.register_update_observer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-xbmc_remote_gtk.model">
+<span id="model-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">model</span></tt> Module<a class="headerlink" href="#module-xbmc_remote_gtk.model" title="Permalink to this headline">¶</a></h2>
+<p>Created on 30.05.2013</p>
+<p>&#64;author: Steffen Kampmann</p>
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.Album">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.model.</tt><tt class="descname">Album</tt><big>(</big><em>albumid</em>, <em>label</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Album"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Album" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.Artist">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.model.</tt><tt class="descname">Artist</tt><big>(</big><em>artistid</em>, <em>artist</em>, <em>label</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Artist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Artist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.AudioPlayer">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.model.</tt><tt class="descname">AudioPlayer</tt><big>(</big><em>controller=None</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#xbmc_remote_gtk.model.Player" title="xbmc_remote_gtk.model.Player"><tt class="xref py py-class docutils literal"><span class="pre">xbmc_remote_gtk.model.Player</span></tt></a></p>
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.CurrentSongObserver">
+<em class="property">class </em><tt class="descname">CurrentSongObserver</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.CurrentSongObserver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.CurrentSongObserver" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.CurrentSongObserver.on_current_song_update">
+<tt class="descname">on_current_song_update</tt><big>(</big><em>current_song</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.CurrentSongObserver.on_current_song_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.CurrentSongObserver.on_current_song_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.IsPlayingObserver">
+<em class="property">class </em><tt class="descclassname">AudioPlayer.</tt><tt class="descname">IsPlayingObserver</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.IsPlayingObserver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.IsPlayingObserver" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.IsPlayingObserver.on_is_playing_update">
+<tt class="descname">on_is_playing_update</tt><big>(</big><em>is_playing</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.IsPlayingObserver.on_is_playing_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.IsPlayingObserver.on_is_playing_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.controller">
+<tt class="descclassname">AudioPlayer.</tt><tt class="descname">controller</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.controller"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.controller" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.current_song">
+<tt class="descclassname">AudioPlayer.</tt><tt class="descname">current_song</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.current_song"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.current_song" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.is_playing">
+<tt class="descclassname">AudioPlayer.</tt><tt class="descname">is_playing</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.is_playing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.is_playing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.notify_is_playing_observer">
+<tt class="descclassname">AudioPlayer.</tt><tt class="descname">notify_is_playing_observer</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.notify_is_playing_observer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.notify_is_playing_observer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.register_current_song_observer">
+<tt class="descclassname">AudioPlayer.</tt><tt class="descname">register_current_song_observer</tt><big>(</big><em>observer</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.register_current_song_observer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.register_current_song_observer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.register_is_playing_observer">
+<tt class="descclassname">AudioPlayer.</tt><tt class="descname">register_is_playing_observer</tt><big>(</big><em>observer</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.register_is_playing_observer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.register_is_playing_observer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.AudioPlayer.speed">
+<tt class="descclassname">AudioPlayer.</tt><tt class="descname">speed</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#AudioPlayer.speed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.AudioPlayer.speed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.Genre">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.model.</tt><tt class="descname">Genre</tt><big>(</big><em>genreid</em>, <em>label</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Genre"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Genre" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.Item">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.model.</tt><tt class="descname">Item</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.Player">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.model.</tt><tt class="descname">Player</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Player"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Player" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.Remote">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.model.</tt><tt class="descname">Remote</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Remote"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Remote" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.Remote.CONNECTION_STATES">
+<tt class="descname">CONNECTION_STATES</tt><em class="property"> = {0: 'offline', 1: 'online', 2: 'authenticated'}</em><a class="headerlink" href="#xbmc_remote_gtk.model.Remote.CONNECTION_STATES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.Remote.CONNECTION_STATE_AUTHENTICATED">
+<tt class="descname">CONNECTION_STATE_AUTHENTICATED</tt><em class="property"> = 2</em><a class="headerlink" href="#xbmc_remote_gtk.model.Remote.CONNECTION_STATE_AUTHENTICATED" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.Remote.CONNECTION_STATE_OFFLINE">
+<tt class="descname">CONNECTION_STATE_OFFLINE</tt><em class="property"> = 0</em><a class="headerlink" href="#xbmc_remote_gtk.model.Remote.CONNECTION_STATE_OFFLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.Remote.CONNECTION_STATE_ONLINE">
+<tt class="descname">CONNECTION_STATE_ONLINE</tt><em class="property"> = 1</em><a class="headerlink" href="#xbmc_remote_gtk.model.Remote.CONNECTION_STATE_ONLINE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.Remote.ConnectionStateObserver">
+<em class="property">class </em><tt class="descname">ConnectionStateObserver</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Remote.ConnectionStateObserver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Remote.ConnectionStateObserver" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="xbmc_remote_gtk.model.Remote.ConnectionStateObserver.on_connection_state_update">
+<tt class="descname">on_connection_state_update</tt><big>(</big><em>state</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Remote.ConnectionStateObserver.on_connection_state_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Remote.ConnectionStateObserver.on_connection_state_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.Remote.connection_state">
+<tt class="descclassname">Remote.</tt><tt class="descname">connection_state</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Remote.connection_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Remote.connection_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.model.Remote.notify_connection_state_observer">
+<tt class="descclassname">Remote.</tt><tt class="descname">notify_connection_state_observer</tt><big>(</big><em>state</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Remote.notify_connection_state_observer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Remote.notify_connection_state_observer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.model.Remote.register_connection_state_observer">
+<tt class="descclassname">Remote.</tt><tt class="descname">register_connection_state_observer</tt><big>(</big><em>observer</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Remote.register_connection_state_observer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Remote.register_connection_state_observer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.model.Song">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.model.</tt><tt class="descname">Song</tt><big>(</big><em>id=None</em>, <em>**properties</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Song"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Song" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#xbmc_remote_gtk.model.Item" title="xbmc_remote_gtk.model.Item"><tt class="xref py py-class docutils literal"><span class="pre">xbmc_remote_gtk.model.Item</span></tt></a></p>
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.Song.PROPERTIES">
+<tt class="descname">PROPERTIES</tt><em class="property"> = ['title', 'artist', 'album', 'year', 'genre']</em><a class="headerlink" href="#xbmc_remote_gtk.model.Song.PROPERTIES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.model.Song.label">
+<tt class="descname">label</tt><a class="reference internal" href="modules/xbmc_remote_gtk/model.html#Song.label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.model.Song.label" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-xbmc_remote_gtk.view">
+<span id="view-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">view</span></tt> Module<a class="headerlink" href="#module-xbmc_remote_gtk.view" title="Permalink to this headline">¶</a></h2>
+<p>Created on 30.05.2013</p>
+<p>&#64;author: Steffen Kampmann</p>
+<dl class="class">
+<dt id="xbmc_remote_gtk.view.ConfigDialog">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.view.</tt><tt class="descname">ConfigDialog</tt><big>(</big><em>config</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#ConfigDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.ConfigDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.view.ConfigDialog.WIDGETS">
+<tt class="descname">WIDGETS</tt><em class="property"> = ['config_dialog', 'hostname_entry', 'port_entry', 'username_entry', 'password_entry']</em><a class="headerlink" href="#xbmc_remote_gtk.view.ConfigDialog.WIDGETS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.ConfigDialog.on_config_dialog_close">
+<tt class="descname">on_config_dialog_close</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#ConfigDialog.on_config_dialog_close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.ConfigDialog.on_config_dialog_close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.ConfigDialog.on_config_dialog_response">
+<tt class="descname">on_config_dialog_response</tt><big>(</big><em>dialog</em>, <em>response_id</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#ConfigDialog.on_config_dialog_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.ConfigDialog.on_config_dialog_response" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.ConfigDialog.quit">
+<tt class="descname">quit</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#ConfigDialog.quit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.ConfigDialog.quit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.ConfigDialog.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#ConfigDialog.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.ConfigDialog.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xbmc_remote_gtk.view.PlayerWindow">
+<em class="property">class </em><tt class="descclassname">xbmc_remote_gtk.view.</tt><tt class="descname">PlayerWindow</tt><big>(</big><em>core</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">xbmc_remote_gtk.model.ConnectionStateObserver</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">xbmc_remote_gtk.model.CurrentSongObserver</span></tt>, <tt class="xref py py-class docutils literal"><span class="pre">xbmc_remote_gtk.model.IsPlayingObserver</span></tt></p>
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.STATUSBAR_CONTEXT_CONNECTION">
+<tt class="descname">STATUSBAR_CONTEXT_CONNECTION</tt><em class="property"> = 'connection'</em><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.STATUSBAR_CONTEXT_CONNECTION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.WIDGETS">
+<tt class="descname">WIDGETS</tt><em class="property"> = ['player_window', 'playlist_liststore', 'genre_liststore', 'artist_liststore', 'album_liststore', 'track_liststore', 'song_title_label', 'song_subtitle_label', 'play_toolbutton', 'pause_toolbutton', 'song_progress_box', 'volume_button', 'player_statusbar']</em><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.WIDGETS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_albums_update">
+<tt class="descname">on_albums_update</tt><big>(</big><em>albums</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_albums_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_albums_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_artists_update">
+<tt class="descname">on_artists_update</tt><big>(</big><em>artists</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_artists_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_artists_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_connection_edit_menuitem_activate">
+<tt class="descname">on_connection_edit_menuitem_activate</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_connection_edit_menuitem_activate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_connection_edit_menuitem_activate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_connection_state_update">
+<tt class="descname">on_connection_state_update</tt><big>(</big><em>state</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_connection_state_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_connection_state_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_current_song_update">
+<tt class="descname">on_current_song_update</tt><big>(</big><em>current_song</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_current_song_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_current_song_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_genres_update">
+<tt class="descname">on_genres_update</tt><big>(</big><em>genres</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_genres_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_genres_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_go_previous_toolbutton_clicked">
+<tt class="descname">on_go_previous_toolbutton_clicked</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_go_previous_toolbutton_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_go_previous_toolbutton_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_is_playing_update">
+<tt class="descname">on_is_playing_update</tt><big>(</big><em>is_playing</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_is_playing_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_is_playing_update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_next_toolbutton_clicked">
+<tt class="descname">on_next_toolbutton_clicked</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_next_toolbutton_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_next_toolbutton_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_pause_toolbutton_clicked">
+<tt class="descname">on_pause_toolbutton_clicked</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_pause_toolbutton_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_pause_toolbutton_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_play_toolbutton_clicked">
+<tt class="descname">on_play_toolbutton_clicked</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_play_toolbutton_clicked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_play_toolbutton_clicked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.on_player_window_destroy">
+<tt class="descname">on_player_window_destroy</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.on_player_window_destroy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.on_player_window_destroy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.quit">
+<tt class="descname">quit</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.quit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.quit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xbmc_remote_gtk.view.PlayerWindow.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="modules/xbmc_remote_gtk/view.html#PlayerWindow.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xbmc_remote_gtk.view.PlayerWindow.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">xbmc_remote_gtk Package</a><ul>
+<li><a class="reference internal" href="#module-xbmc_remote_gtk.controller"><tt class="docutils literal"><span class="pre">controller</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-xbmc_remote_gtk.model"><tt class="docutils literal"><span class="pre">model</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-xbmc_remote_gtk.view"><tt class="docutils literal"><span class="pre">view</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to xbmc_remote_gtk&#8217;s documentation!</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="sources/xbmc_remote_gtk.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to xbmc_remote_gtk’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">XBMC Remote GTK  documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Steffen Kampmann.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
