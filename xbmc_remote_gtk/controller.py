@@ -1,7 +1,7 @@
 '''
 Created on 30.05.2013
 
-@author: abb
+@author: Steffen Kampmann
 '''
 
 import os
@@ -14,6 +14,7 @@ import threading
 
 from model import Remote as RemoteModel
 from model import Song as SongModel, AudioPlayer as AudioPlayerModel
+from model import AudioLibrary as AudioLibraryModel
 from model import Genre as GenreModel, Artist as ArtistModel, Album as AlbumModel
 from view import PlayerWindow
 
@@ -249,6 +250,7 @@ class AudioLibrary(_Library):
     def __init__(self, client):
         logging.debug('create audio library')
         self.client = client
+        self.model = AudioLibraryModel(self)
 
     def get_song(self, id = None, **params):
         logging.debug('get song %s' % id)
@@ -263,18 +265,32 @@ class AudioLibrary(_Library):
             genres.append(GenreModel(**struct))
         return genres
 
-    def get_artists(self):
+    def get_artists(self, genres):
         logging.debug('get artists')
         artists = []
-        for struct in self.client._request('AudioLibrary.GetArtists')['artists']:
-            artists.append(ArtistModel(**struct))
+
+        if len(genres) == 0:
+            for struct in self.client._request('AudioLibrary.GetArtists')['artists']:
+                artists.append(ArtistModel(**struct))
+        else:
+            for genre in genres:
+                for struct in self.client._request('AudioLibrary.GetArtists', filter = {'genreid': genre})['artists']:
+                    artists.append(ArtistModel(**struct))
+
         return artists
 
-    def get_albums(self):
+    def get_albums(self, artists):
         logging.debug('get albums')
         albums = []
-        for struct in self.client._request('AudioLibrary.GetAlbums')['albums']:
-            albums.append(AlbumModel(**struct))
+
+        if len(artists) == 0:
+            for struct in self.client._request('AudioLibrary.GetAlbums')['albums']:
+                albums.append(AlbumModel(**struct))
+        else:
+            for artist in artists:
+                for struct in self.client._request('AudioLibrary.GetAlbums', filter = {'artistid':artist})['albums']:
+                    albums.append(AlbumModel(**struct))
+
         return albums
 
 class _Player(object):
@@ -345,7 +361,7 @@ class Core(object, Client.ActivePlayerObserver):
         self.client.register_active_player_observer(self)
         config['server'].register_update_observer(self.client)
 
-        self.player_window = PlayerWindow(self)
+        self.player_window = PlayerWindow(self, self.client.model, self.client.audio_library.model)
 
         threading.Thread(target = self.client.get_active_players).start()  # TODO replace this with something nicer
         self.player_status_cron = GetPlayerStatusCron(self, 5)

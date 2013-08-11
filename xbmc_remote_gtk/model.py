@@ -1,15 +1,111 @@
 '''
 Created on 30.05.2013
 
-@author: abb
+@author: Steffen Kampmann
 '''
 
 import logging
 logging = logging.getLogger(__name__)
 
+import json
+
+class AudioLibrary(object):
+
+    def __init__(self, controller):
+        self.controller = controller
+
+        self.genres, self.artists, self.albums = [], [], []
+
+        self._previous_selection = None
+
+#         self.on_genres_update()
+#         self.on_artists_update()
+#         self.on_albums_update()
+
+    def get_filter(self, genre_selection, artist_selection, album_selection):
+        if self._previous_selection != json.dumps((genre_selection, artist_selection, album_selection)):
+            self._previous_selection = json.dumps((genre_selection, artist_selection, album_selection))
+
+            logging.debug('select ' + ', '.join(genre_selection) + ', '.join(artist_selection) + ', '.join(album_selection))
+
+            genre_ids = []
+            for genre in self.genres:
+                if genre.label in genre_selection:
+                    genre_selection.remove(genre.label)
+                    genre_ids.append(genre.genreid)
+
+            artist_ids = []
+            for artist in self.artists:
+                if artist.name in artist_selection:
+                    artist_selection.remove(artist.name)
+                    artist_ids.append(artist.artistid)
+
+            album_ids = []
+            for album in self.albums:
+                if album.title in self.albums:
+                    album_selection.remove(album.title)
+                    album_ids.append(album.albumid)
+
+            self.genres, self.artists, self.albums = [], [], []
+
+            for genre in self.controller.get_genres():
+                self.genres.append(genre)
+
+            for artist in self.controller.get_artists(genres = genre_ids):
+                self.artists.append(artist)
+
+            for album in self.controller.get_albums(artists = artist_ids):
+                self.albums.append(album)
+
+        return self.genres, self.artists, self.albums
+
+#     def on_genres_update(self):
+#         for genre in self.controller.get_genres():
+#             self.genres.append([genre.label])
+#
+#     def on_artists_update(self):
+#         for artist in self.controller.get_artists():
+#             self.artists.append([artist.name])
+#
+#     def on_albums_update(self):
+#         for album in self.controller.get_albums():
+#             self.albums.append([album.title])
+
 class Player(object):
 
-    pass
+    @property
+    def speed(self):
+        return self._speed
+
+    @speed.setter
+    def speed(self, value):
+        previous_speed = self._speed
+        self._speed = value
+        if previous_speed != value:
+            self.notify_is_playing_observer()
+
+    @property
+    def is_playing(self):
+        if self.speed is None:
+            self.speed = self.controller.speed
+        return bool(self.speed)
+
+    class IsPlayingObserver:
+
+        def on_is_playing_update(self, is_playing):
+            raise NotImplementedError()
+
+    def register_is_playing_observer(self, observer):
+        assert isinstance(observer, AudioPlayer.IsPlayingObserver)
+        self._is_playing_observer.append(observer)
+
+    def notify_is_playing_observer(self):
+        for observer in self._is_playing_observer:
+            observer.on_is_playing_update(self.is_playing)
+
+    def __init__(self):
+        self._speed = None
+        self._is_playing_observer = []
 
 
 class Remote(object):
@@ -56,11 +152,10 @@ class Remote(object):
 class AudioPlayer(Player):
 
     def __init__(self, controller = None):
+        Player.__init__(self)
         self._controller = controller
         self._current_song = None
-        self._speed = None
         self._current_song_observer = []
-        self._is_playing_observer = []
 
     @property
     def controller(self):
@@ -71,36 +166,6 @@ class AudioPlayer(Player):
         self._controller = value
         self._controller.model = self
         logging.debug('set controller')
-
-    @property
-    def speed(self):
-        return self._speed
-
-    @speed.setter
-    def speed(self, value):
-        previous_speed = self._speed
-        self._speed = value
-        if previous_speed != value:
-            self.notify_is_playing_observer()
-
-    @property
-    def is_playing(self):
-        if self.speed is None:
-            self.speed = self.controller.speed
-        return bool(self.speed)
-
-    class IsPlayingObserver:
-
-        def on_is_playing_update(self, is_playing):
-            raise NotImplementedError()
-
-    def register_is_playing_observer(self, observer):
-        assert isinstance(observer, AudioPlayer.IsPlayingObserver)
-        self._is_playing_observer.append(observer)
-
-    def notify_is_playing_observer(self):
-        for observer in self._is_playing_observer:
-            observer.on_is_playing_update(self.is_playing)
 
     class CurrentSongObserver:
 
